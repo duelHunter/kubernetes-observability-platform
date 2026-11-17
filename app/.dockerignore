@@ -1,0 +1,43 @@
+# Dependencies (installed inside the image by the builder stage)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local runtime data (SQLite files etc.)
+data
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Docker files
+Dockerfile*
+.dockerignore
+
+# Version control
+.git
+.gitignore
+
+# Logs
+logs
+*.log
+
+# Tests / coverage
+coverage
+.nyc_output
+
+# Editors / OS
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db
+
+# Docs
+*.md
