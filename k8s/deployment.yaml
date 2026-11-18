@@ -46,7 +46,7 @@ spec:
 
         - name: monitoring-api
 
-          image: my-image:v5
+          image: my-image:v6
 
           imagePullPolicy: IfNotPresent
 

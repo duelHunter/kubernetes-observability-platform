@@ -22,6 +22,33 @@ app.get("/", (req, res) => {
   res.send("Kubernetes Monitoring API");
 });
 
+// Liveness: Is Node.js responsive?
+app.get("/health/live", (req, res) => {
+  res.status(200).json({
+    status: "alive",
+    hostname: os.hostname(),
+  });
+});
+
+// Readiness: Is PostgreSQL reachable?
+app.get("/health/ready", async (req, res) => {
+  try {
+    await pool.query("SELECT 1");
+
+    res.status(200).json({
+      status: "ready",
+      database: "connected",
+    });
+  } catch (err) {
+    console.error("Readiness failed:", err.message);
+
+    res.status(503).json({
+      status: "not ready",
+      database: "unavailable",
+    });
+  }
+});
+
 // Basic application health
 app.get("/health", (req, res) => {
   res.json({ status: "healthy" });
