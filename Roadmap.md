@@ -12,8 +12,6 @@
 - [x] Install Helm (used to install the observability release -> https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack).
 
 ```bash
-# Existing Minikube cluster can be kept; create a separate larger profile
-minikube stop -p minikube
 minikube start -p sre-lab --driver=docker --cpus=4 --memory=8192
 minikube profile sre-lab
 kubectl config current-context
@@ -26,7 +24,7 @@ helm version
 ## Phase 2 — Deploy Observability Stack
 
 - [x] Install the `kube-prometheus-stack` Helm release (Grafana deployment subsequently reported available).
-- [ ] Verify **all** Prometheus, Grafana, Alertmanager, node-exporter, and kube-state-metrics Pods/targets are healthy.
+- [x] Verify **all** Prometheus, Grafana, Alertmanager, node-exporter, and kube-state-metrics Pods/targets are healthy.
 
 ```bash
 kubectl create namespace monitoring   # Only once; skip if it exists
@@ -141,26 +139,3 @@ kubectl rollout status deployment/monitoring-api
 - [ ] Store application source, Dockerfile, Kubernetes manifests, and Helm values in Git.
 - [ ] Add GitHub Actions to test/build images and deploy to the lab.
 - [ ] Document architecture, operational checks, known issues, and incident lessons.
-
-```text
-kubernetes-project/
-├── backend/                 # server.js, package.json, Dockerfile
-├── sre-lab/                 # postgres.yaml, configmap.yaml, api.yaml,
-│                           # monitoring-values.yaml
-├── docs/                    # architecture.md, runbook.md, incidents.md
-└── .github/workflows/       # CI/CD (planned)
-```
-
-## Quick daily checks
-
-```bash
-kubectl config current-context
-minikube -p sre-lab status
-kubectl get nodes
-kubectl get pods -A
-kubectl get pvc -A
-helm status monitoring -n monitoring
-kubectl get svc -n monitoring
-```
-
-**Next milestone:** Verify the entire monitoring stack, deploy or confirm `monitoring-api:v4`, create a `ServiceMonitor`, and confirm the API target is `UP` in Prometheus before designing custom dashboards.
